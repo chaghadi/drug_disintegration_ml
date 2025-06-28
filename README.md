@@ -33,3 +33,8 @@ Features include (not exhaustive):
  'FRIABILITY', 'Drug content', 'Water absorption ratio', 'DISINTEGRATION_TIME']
 
 Reference: Dataset development of pre-formulation tests on fast disintegrating tablets (FDT): data aggregation.” BMC research notes vol. 16,1 131. 3 Jul. 2023, doi:10.1186/s13104-023-06416-w
+
+Workflow points:
+Optuna is an automatic hyperparameter optimization framework designed for machine learning. Unlike traditional grid or random search, Optuna uses intelligent sampling (e.g. TPE) and early stopping to efficiently find the best hyperparameters.
+
+In this project, Optuna helps us tune our LightGBM regressor to improve predictive accuracy for drug disintegration time by optimizing parameters like learning_rate, max_depth, and num_leaves.
