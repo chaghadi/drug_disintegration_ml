@@ -1,8 +1,8 @@
 Drug Disintegration Time Prediction using Machine Learning
 
-My proposed platform aims to explore how machine learning models can be used to predict the disintegration time of fast disintegrating tablets based on excipient combination and physicochemical properties. Disintegration time is a critical quality attribute in oral dosage forms, especially for fast-dissolving tablets. By applying predictive modeling to existing datasets, this project identifies potential features influencing rapid disintegration and streamlines experimental design in pharmaceutical development.
+This is a simple personal project to explore how machine learning models can be used to predict the disintegration time of fast disintegrating tablets based on excipient combination and physicochemical properties. Disintegration time is a critical quality attribute in oral dosage forms, especially for fast-dissolving tablets. By applying predictive modeling to existing datasets, this project aims to identifies potential features influencing rapid disintegration and develop models that can be used for pharmaceutical development.
 
-The data is adopted from an agregation of data study performed by Momeni, Mehri et al. 
+The data is adopted from an agregation of data in a study performed by Momeni, Mehri et al. 
 
 
 
@@ -16,7 +16,7 @@ The data is adopted from an agregation of data study performed by Momeni, Mehri 
 
 🧪 Dataset
 
-This project utilizes a curated dataset with 75+ formulation and physical property features, including:
+This project uses a dataset with 75+ formulation and physical property features, including:
 
 - API descriptors: Molecular weight, LogP, H-bond donors/acceptors, etc.
 - Physical characteristics: Angle of repose, tapped density, bulk density
@@ -31,10 +31,32 @@ Features include (not exhaustive):
  'Carrs Compressibility Index', 'Microcrystalline Cellulose',
  'Sodium starch glycolate', 'Sucralose', 'HARDNESS', 
  'FRIABILITY', 'Drug content', 'Water absorption ratio', 'DISINTEGRATION_TIME']
+ 
+ ## 🔬 Model Performance (LightGBM)
+
+After testing multiple models (RandomForest, SVR, KNN, ANN), a tuned LightGBM regressor delivered the best results.
+
+| Model        | R² Score | RMSE   |
+|--------------|----------|--------|
+| Baseline RF  | 0.688    | ~24.7  |
+| Stacked LGBM+RF | 0.695 | ~23.5  |
+| Optuna LGBM  | 0.714    | ~22.8  |
+| **Tuned LGBM (GridSearch)** | **0.747** | **21.48** ✅ |
+
+Key tuned parameters:
+```json
+{
+  "learning_rate": 0.05,
+  "max_depth": 10,
+  "num_leaves": 50,
+  "min_child_samples": 10,
+  "subsample": 0.8,
+  "colsample_bytree": 1.0,
+  "reg_alpha": 0.1,
+  "reg_lambda": 0.1,
+  "n_estimators": 300
+}
+
 
 Reference: Dataset development of pre-formulation tests on fast disintegrating tablets (FDT): data aggregation.” BMC research notes vol. 16,1 131. 3 Jul. 2023, doi:10.1186/s13104-023-06416-w
 
-Workflow points:
-Optuna is an automatic hyperparameter optimization framework designed for machine learning. Unlike traditional grid or random search, Optuna uses intelligent sampling (e.g. TPE) and early stopping to efficiently find the best hyperparameters.
-
-In this project, Optuna helps us tune our LightGBM regressor to improve predictive accuracy for drug disintegration time by optimizing parameters like learning_rate, max_depth, and num_leaves.
